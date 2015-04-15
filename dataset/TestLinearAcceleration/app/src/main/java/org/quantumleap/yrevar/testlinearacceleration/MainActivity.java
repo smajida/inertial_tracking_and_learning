@@ -76,6 +76,7 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
     private void resetvalues() {
 
         Log.i("LinearAccelerationTest", "Reset Values");
+        initGraphView();
         v_x.clear();
         v_y.clear();
         v_z.clear();
@@ -146,6 +147,15 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
 
         // Realtime graph view
         graphview1 = (GraphView) findViewById(R.id.graph1);
+        graphview2 = (GraphView) findViewById(R.id.graph2);
+        initGraphView();
+    }
+
+    private void initGraphView() {
+
+        graphview1.removeAllSeries();
+        graphview2.removeAllSeries();
+        //Hope old series objects get garbage collected
         graph1_series = new LineGraphSeries<DataPoint>();
         graphview1.addSeries(graph1_series);
         graphview1.getViewport().setYAxisBoundsManual(true);
@@ -155,7 +165,6 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
         graphview1.getViewport().setMinX(0);
         graphview1.getViewport().setMaxX(100);
 
-        graphview2 = (GraphView) findViewById(R.id.graph2);
         graph2_series = new LineGraphSeries<DataPoint>();
         graphview2.addSeries(graph2_series);
         graphview2.getViewport().setYAxisBoundsManual(true);
@@ -322,9 +331,9 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
             else if(recordUpdate == true) {
 
                 //Debug
-//                Log.i("LinearAccelerationTest", "X vector " + v_x.toString());
-//                Log.i("LinearAccelerationTest", "Y vector " + v_y.toString());
-//                Log.i("LinearAccelerationTest", "Z vector " + v_z.toString());
+                Log.i("LinearAccelerationTest", "X vector " + v_x.toString());
+                Log.i("LinearAccelerationTest", "Y vector " + v_y.toString());
+                Log.i("LinearAccelerationTest", "Z vector " + v_z.toString());
 //                Log.i("LinearAccelerationTest", "Here it goes..." + "\nchar_ascii = \"L-to-R\"" + "\nvec_len = " + v_x.size() + "\nXAccel = np.array(" + v_x.toString() + ")\nYAccel = np.array(" + v_y.toString()
 //                + ")\nt = np.linspace(0, 1, vec_len)"
 //                + "\nplotAccelerationValues(t, XAccel, char_ascii, 0)"
@@ -332,14 +341,15 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
 //                );
 
                 //Generate Python plot script
-                Log.i("LinearAccelerationTest", "Here it goes..." + "\nchar_ascii = \"U-to-D\"" + "\nFreq = " + frequency + "\nvec_len = " + v_x.size() + "\nXAccel = np.array(" + v_x.toString() + ")\nYAccel = np.array(" + v_y.toString()
-                                + ")\nplotDim2Features(vec_len, XAccel, YAccel, char_ascii)"
-                );
+//                Log.i("LinearAccelerationTest", "Here it goes..." + "\nchar_ascii = \"U-to-D\"" + "\nFreq = " + frequency + "\nvec_len = " + v_x.size() + "\nXAccel = np.array(" + v_x.toString() + ")\nYAccel = np.array(" + v_y.toString()
+//                                + ")\nplotDim2Features(vec_len, XAccel, YAccel, char_ascii)"
+//                );
 
                 //Text box debug
                 patternText.setText("pattern_x " + v_x.toString() + "\npattern_y " + v_y.toString() + "\npattern_z" + v_z.toString());
                 recordUpdate = false;
             }
+
 
         }
         else if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
