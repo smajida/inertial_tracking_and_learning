@@ -67,8 +67,10 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
     int count = 0;
 
     //Graph view
-    GraphView graph = null;
-    LineGraphSeries<DataPoint> series = null;
+    GraphView graphview1 = null;
+    GraphView graphview2 = null;
+    LineGraphSeries<DataPoint> graph1_series = null;
+    LineGraphSeries<DataPoint> graph2_series = null;
 
 
     private void resetvalues() {
@@ -143,16 +145,25 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
 
 
         // Realtime graph view
-        graph = (GraphView) findViewById(R.id.graph);
-        series = new LineGraphSeries<DataPoint>();
+        graphview1 = (GraphView) findViewById(R.id.graph1);
+        graph1_series = new LineGraphSeries<DataPoint>();
+        graphview1.addSeries(graph1_series);
+        graphview1.getViewport().setYAxisBoundsManual(true);
+        graphview1.getViewport().setMinY(-10);
+        graphview1.getViewport().setMaxY(10);
+        graphview1.getViewport().setXAxisBoundsManual(true);
+        graphview1.getViewport().setMinX(0);
+        graphview1.getViewport().setMaxX(100);
 
-        graph.addSeries(series);
-        graph.getViewport().setYAxisBoundsManual(true);
-        graph.getViewport().setMinY(-10);
-        graph.getViewport().setMaxY(10);
-        graph.getViewport().setXAxisBoundsManual(true);
-        graph.getViewport().setMinX(0);
-        graph.getViewport().setMaxX(100);
+        graphview2 = (GraphView) findViewById(R.id.graph2);
+        graph2_series = new LineGraphSeries<DataPoint>();
+        graphview2.addSeries(graph2_series);
+        graphview2.getViewport().setYAxisBoundsManual(true);
+        graphview2.getViewport().setMinY(-10);
+        graphview2.getViewport().setMaxY(10);
+        graphview2.getViewport().setXAxisBoundsManual(true);
+        graphview2.getViewport().setMinX(0);
+        graphview2.getViewport().setMaxX(100);
     }
 
     protected void onResume() {
@@ -288,7 +299,8 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
             //test.setText("x " +  String.format("%.6f", gravSensorAvg[0]) + "\ny " + String.format("%.6f", gravSensorAvg[1]) + "\nz " + String.format("%.6f", gravSensorAvg[2]));
 
             //Update realtime graph
-            series.appendData(new DataPoint(count, gravSensorVals[0]), true, 100);
+            graph1_series.appendData(new DataPoint(count, gravSensorVals[0]), true, 100);
+            graph2_series.appendData(new DataPoint(count, gravSensorVals[1]), true, 100);
 
             if(startRecording) {
 
